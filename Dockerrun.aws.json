@@ -24,7 +24,7 @@
         },
         {
             "name": "nginx",
-            "image": "adao/multi-nginx",
+            "image": "adaoee/multi-nginx",
             "hostname": "nginx",
             "essential": true,
             "portMappings": [
