@@ -17,7 +17,8 @@ after_sucess:
 # login to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
    # take those images and push them to docker hub  SHOULD CHANGE TO duyanh2705 for docker hub
+    - docker push adaoee/multi-server
+    - docker push adaoee/multi-worker 
     - docker push adaoee/multi-client
     - docker push adaoee/multi-nginx
-    - docker push adaoee/multi-server
-    - docker push adaoee/multi-worker
+
