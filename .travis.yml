@@ -1,4 +1,6 @@
 sudo: required
+language: generic
+
 services:
     - docker
 
@@ -8,29 +10,27 @@ before_install:
 script:
     - docker run adaoee/react-test npm test -- --coverage
 
-after_sucess:
+after_success:
     - docker build -t adaoee/multi-client ./client
     - docker build -t adaoee/multi-nginx ./nginx
     - docker build -t adaoee/multi-server ./server
     - docker build -t adaoee/multi-worker ./worker
-
-# login to the docker CLI
+    # Log in to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-# take those images and push them to docker hub  SHOULD CHANGE TO duyanh2705 for docker hub
-    - docker push adaoee/multi-server
-    - docker push adaoee/multi-worker 
+    # Take those images and push them to docker hub
     - docker push adaoee/multi-client
     - docker push adaoee/multi-nginx
+    - docker push adaoee/multi-server
+    - docker push adaoee/multi-worker
 
 deploy:
     provider: elasticbeanstalk
-    region: us-east-2
-    app: multi-docker
-    env: MultiDocker-env
-    bucket_name: elasticbeanstalk-us-east-2-491381916608
-    bucket_path: docker-multi
+    region: 'us-east-2'
+    app: 'multi-docker'
+    env: 'MultiDocker-env'
+    bucket_name: 'elasticbeanstalk-us-east-2-491381916608'
+    bucket_path: 'docker-multi'
     on:
         branch: master
-
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
